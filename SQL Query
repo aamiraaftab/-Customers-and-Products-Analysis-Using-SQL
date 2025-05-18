@@ -1,0 +1,68 @@
+SELECT 
+    p.productCode,
+    p.productName,
+    SUM(od.quantityOrdered) AS totalOrdered,
+    p.quantityInStock,
+    ROUND(SUM(od.quantityOrdered) / p.quantityInStock, 2) AS stockRatio
+FROM 
+    Products p
+JOIN 
+    OrderDetails od ON p.productCode = od.productCode
+GROUP BY 
+    p.productCode, p.productName, p.quantityInStock
+ORDER BY 
+    stockRatio DESC
+LIMIT 10;
+
+SELECT 
+    p.productCode,
+    p.productName,
+    SUM(od.quantityOrdered * od.priceEach) AS totalSales
+FROM 
+    Products p
+JOIN 
+    OrderDetails od ON p.productCode = od.productCode
+GROUP BY 
+    p.productCode, p.productName
+ORDER BY 
+    totalSales DESC;
+    
+ SELECT 
+    c.customerNumber,
+    c.customerName,
+    SUM(p.amount) AS totalPaid
+FROM 
+    Customers c
+JOIN 
+    Payments p ON c.customerNumber = p.customerNumber
+GROUP BY 
+    c.customerNumber, c.customerName
+ORDER BY 
+    totalPaid DESC
+LIMIT 5;
+
+
+
+SELECT 
+    c.customerNumber,
+    c.customerName,
+    SUM(p.amount) AS totalPaid
+FROM 
+    Customers c
+JOIN 
+    Payments p ON c.customerNumber = p.customerNumber
+GROUP BY 
+    c.customerNumber, c.customerName
+ORDER BY 
+    totalPaid ASC
+LIMIT 5;
+
+
+
+
+SELECT 
+    ROUND(SUM(amount) / COUNT(DISTINCT customerNumber), 2) AS averageLTV
+FROM 
+    Payments;
+
+
