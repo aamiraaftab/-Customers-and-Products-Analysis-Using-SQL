@@ -1,0 +1,121 @@
+---- Schema SQL----
+
+DROP TABLE IF EXISTS OrderDetails, Orders, Payments, Customers, Products, ProductLines, Employees, Offices;
+
+-- 1. Offices
+CREATE TABLE Offices (
+    officeCode VARCHAR(10) PRIMARY KEY,
+    city VARCHAR(50),
+    phone VARCHAR(20),
+    addressLine1 VARCHAR(100)
+);
+
+INSERT INTO Offices VALUES 
+('1', 'Delhi', '011-223344', 'Connaught Place'),
+('2', 'Mumbai', '022-556677', 'Bandra Kurla Complex');
+
+-- 2. Employees
+CREATE TABLE Employees (
+    employeeNumber INT PRIMARY KEY,
+    lastName VARCHAR(50),
+    firstName VARCHAR(50),
+    officeCode VARCHAR(10),
+    jobTitle VARCHAR(50)
+);
+
+INSERT INTO Employees VALUES 
+(101, 'Sharma', 'Ravi', '1', 'Sales Manager'),
+(102, 'Mehta', 'Anjali', '2', 'Sales Rep');
+
+-- 3. Customers
+CREATE TABLE Customers (
+    customerNumber INT PRIMARY KEY,
+    customerName VARCHAR(100),
+    contactLastName VARCHAR(50),
+    contactFirstName VARCHAR(50),
+    phone VARCHAR(20),
+    city VARCHAR(50)
+);
+
+INSERT INTO Customers VALUES
+(1, 'Rajesh Kumar', 'Kumar', 'Rajesh', '9876543210', 'Delhi'),
+(2, 'Meena Patel', 'Patel', 'Meena', '9123456780', 'Mumbai'),
+(3, 'Aamir Sheikh', 'Sheikh', 'Aamir', '9870011223', 'Bangalore'),
+(4, 'Priya Verma', 'Verma', 'Priya', '9988776655', 'Hyderabad'),
+(5, 'Vikram Singh', 'Singh', 'Vikram', '9001122334', 'Chennai'),
+(6, 'Nikhil Dey', 'Dey', 'Nikhil', '8800665544', 'Kolkata');
+
+-- 4. ProductLines
+CREATE TABLE ProductLines (
+    productLine VARCHAR(50) PRIMARY KEY,
+    textDescription TEXT
+);
+
+INSERT INTO ProductLines VALUES
+('Classic Cars', 'Vintage Indian model cars'),
+('Modern Cars', 'Contemporary Indian and Japanese cars');
+
+-- 5. Products
+CREATE TABLE Products (
+    productCode VARCHAR(15) PRIMARY KEY,
+    productName VARCHAR(100),
+    productLine VARCHAR(50),
+    quantityInStock INT,
+    buyPrice DECIMAL(10,2)
+);
+
+INSERT INTO Products VALUES
+('P001', 'Ambassador Mark II', 'Classic Cars', 10, 950.00),
+('P002', 'Premier Padmini', 'Classic Cars', 5, 899.00),
+('P003', 'Maruti 800', 'Classic Cars', 3, 999.00),
+('P004', 'Tata Nano', 'Modern Cars', 15, 650.00),
+('P005', 'Hyundai Santro', 'Modern Cars', 8, 700.00),
+('P006', 'Honda City', 'Modern Cars', 2, 1100.00);
+
+-- 6. Orders
+CREATE TABLE Orders (
+    orderNumber INT PRIMARY KEY,
+    orderDate DATE,
+    customerNumber INT
+);
+
+INSERT INTO Orders VALUES
+(1001, '2004-06-10', 1),
+(1002, '2004-07-15', 2),
+(1003, '2004-08-01', 3),
+(1004, '2004-08-15', 4),
+(1005, '2004-09-10', 5),
+(1006, '2004-09-12', 6);
+
+-- 7. OrderDetails
+CREATE TABLE OrderDetails (
+    orderNumber INT,
+    productCode VARCHAR(15),
+    quantityOrdered INT,
+    priceEach DECIMAL(10,2)
+);
+
+INSERT INTO OrderDetails VALUES
+(1001, 'P001', 5, 1150.00),
+(1002, 'P002', 3, 1200.00),
+(1003, 'P003', 2, 1350.00),
+(1004, 'P004', 4, 800.00),
+(1005, 'P005', 3, 950.00),
+(1006, 'P006', 2, 1450.00),
+(1001, 'P003', 1, 1350.00),
+(1002, 'P001', 2, 1150.00);
+
+-- 8. Payments
+CREATE TABLE Payments (
+    customerNumber INT,
+    paymentDate DATE,
+    amount DECIMAL(10,2)
+);
+
+INSERT INTO Payments VALUES
+(1, '2004-06-15', 6500.00),
+(2, '2004-07-20', 4000.00),
+(3, '2004-08-05', 2700.00),
+(4, '2004-08-20', 3200.00),
+(5, '2004-09-15', 2850.00),
+(6, '2004-09-20', 2900.00);
